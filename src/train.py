@@ -33,10 +33,6 @@ class ProjectAgent:
                                 nn.ReLU(),
                                 nn.Linear(nb_neurons, nb_neurons),
                                 nn.ReLU(), 
-                                nn.Linear(nb_neurons, nb_neurons),
-                                nn.ReLU(), 
-                                nn.Linear(nb_neurons, nb_neurons),
-                                nn.ReLU(), 
                                 nn.Linear(nb_neurons, n_action))
-        self.model = torch.load("src/models/DQN4.pt", map_location=torch.device('cpu'))
+        self.model = torch.load("src/models/DQN7.pt", map_location=torch.device('cpu'))
         self.model.eval()
