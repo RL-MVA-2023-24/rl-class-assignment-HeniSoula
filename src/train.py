@@ -29,6 +29,10 @@ class ProjectAgent:
         state_dim = env.observation_space.shape[0]
         n_action = env.action_space.n
         nb_neurons = 24
-        self.model = torch.nn.Sequential(nn.Linear(state_dim, nb_neurons), nn.ReLU(), nn.Linear(nb_neurons, n_action))
-        self.model = torch.load("src/models/DQN1.pt", map_location=torch.device('cpu'))
+        self.model = torch.nn.Sequential(nn.Linear(state_dim, nb_neurons),
+                    nn.ReLU(),
+                    nn.Linear(nb_neurons, nb_neurons),
+                    nn.ReLU(), 
+                    nn.Linear(nb_neurons, n_action))
+        self.model = torch.load("src/models/DQN3.pt", map_location=torch.device('cpu'))
         self.model.eval()
