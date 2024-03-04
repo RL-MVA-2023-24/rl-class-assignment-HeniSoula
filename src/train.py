@@ -18,18 +18,9 @@ device = "cuda"
 
 class ProjectAgent:
     def act(self, observation, use_random=False):
-        device = "cuda" if next(self.model.parameters()).is_cuda else "cpu"
         with torch.no_grad():
-            Q = self.model(torch.Tensor(observation).unsqueeze(0).to(device))
+            Q = self.model(torch.Tensor(observation).unsqueeze(0))
             return torch.argmax(Q).item()
-
-        # observation_tensor = torch.from_numpy(observation).view(1, -1).float().to(device)
-        # print(observation_tensor.shape)
-        # action_values = self.model(observation_tensor)
-        # print("owo")
-        # a = torch.argmax(action_values.view(-1)).item()
-        # print(type(a))
-        # return a
 
     def save(self, path):
         pass
@@ -39,15 +30,5 @@ class ProjectAgent:
         n_action = env.action_space.n
         nb_neurons = 24
         self.model = torch.nn.Sequential(nn.Linear(state_dim, nb_neurons), nn.ReLU(), nn.Linear(nb_neurons, n_action))
-        self.model = torch.load("/home/onyxia/work/rl-class-assignment-HeniSoula/src/models/DQN1.pt").to(device)
+        self.model = torch.load("src/models/DQN1.pt", map_location=torch.device('cpu'))
         self.model.eval()
-
-        # payload = {
-        #     'n_states':self.state_size,
-        #     'n_hidden':self.hidden_size,
-        #     'n_actions': self.action_size,
-
-        # }
-        # with open(self.payload_path, 'wb') as file:
-        #     pkl.dump(payload, file)
-        # torch.save(self.network.state_dict(), self.model_path)
